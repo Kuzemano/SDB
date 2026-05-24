@@ -37,40 +37,43 @@
           method="post">
 
         <label for="name">Full Name</label>
-        <input id="name" type="text" name="name" th:value="${driver?.name}"
+        <input id="name" type="text" name="name"
+               th:value="${driver != null ? driver.name.value : ''}"
                placeholder="e.g. Max Verstappen" required/>
 
         <label for="teamName">Team</label>
-        <input id="teamName" type="text" name="teamName" th:value="${driver?.teamName}"
+        <input id="teamName" type="text" name="teamName"
+               th:value="${driver != null ? driver.teamName.value : ''}"
                placeholder="e.g. Red Bull Racing" required/>
 
         <label for="nationality">Nationality</label>
-        <input id="nationality" type="text" name="nationality" th:value="${driver?.nationality}"
+        <input id="nationality" type="text" name="nationality"
+               th:value="${driver != null ? driver.nationality.value : ''}"
                placeholder="e.g. Dutch" required/>
 
         <label for="racingNumber">Racing Number (1–99)</label>
         <input id="racingNumber" type="number" name="racingNumber" min="1" max="99"
-               th:value="${driver?.racingNumber}" required/>
+               th:value="${driver != null ? driver.racingNumber.value : ''}" required/>
 
         <div class="row">
             <div>
                 <label for="salary">Salary</label>
                 <input id="salary" type="number" step="0.01" name="salary" min="0"
-                       th:value="${driver?.salary}" required/>
+                       th:value="${driver != null ? driver.salary.amount : ''}" required/>
             </div>
             <div>
                 <label for="salaryCurrency">Currency</label>
                 <select id="salaryCurrency" name="salaryCurrency">
-                    <option value="EUR" th:selected="${driver?.salaryCurrency == 'EUR'}">EUR</option>
-                    <option value="USD" th:selected="${driver?.salaryCurrency == 'USD'}">USD</option>
-                    <option value="GBP" th:selected="${driver?.salaryCurrency == 'GBP'}">GBP</option>
+                    <option value="EUR" th:selected="${driver != null and driver.salary.currency.name() == 'EUR'}">EUR</option>
+                    <option value="USD" th:selected="${driver != null and driver.salary.currency.name() == 'USD'}">USD</option>
+                    <option value="GBP" th:selected="${driver != null and driver.salary.currency.name() == 'GBP'}">GBP</option>
                 </select>
             </div>
         </div>
 
         <label for="championshipPoints">Championship Points</label>
         <input id="championshipPoints" type="number" name="championshipPoints" min="0"
-               th:value="${driver?.championshipPoints}" required/>
+               th:value="${driver != null ? driver.championshipPoints.value : ''}" required/>
 
         <div class="actions">
             <button type="submit" class="btn">Save Driver</button>

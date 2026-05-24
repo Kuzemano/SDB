@@ -6,35 +6,122 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+
+import r.real.model.valueObjects.*;
+import r.real.model.base.*;
+
+
+import java.math.BigDecimal;
+
+import static org.apache.commons.lang3.Validate.notNull;
+
 @Entity
 @Table(name = "drivers")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Driver {
+public class Driver extends AbstractEntity<DriverId> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Embedded
+    private DriverName name;
 
-    private String name;
-    private String teamName;
-    private String nationality;
-    private Integer racingNumber;
-    private Double salary;
-    private String salaryCurrency;
-    private Integer championshipPoints;
+    @Embedded
+    private TeamName teamName;
 
+    @Embedded
+    private Nationality nationality;
 
-    public Driver(String name, String teamName, String nationality, Integer racingNumber, Double salary, String salaryCurrency, Integer championshipPoints) {
-        this.name = name;
-        this.teamName = teamName;
-        this.nationality = nationality;
-        this.racingNumber = racingNumber;
-        this.salary = salary;
-        this.salaryCurrency = salaryCurrency;
-        this.championshipPoints = championshipPoints;
+    @Embedded
+    private RacingNumber racingNumber;
 
+    @Embedded
+    private Money salary;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @jakarta.persistence.Column(name = "championship_points"))
+    private ChampionshipPoints championshipPoints;
+
+    public Driver(DriverName name,
+                  TeamName teamName,
+                  Nationality nationality,
+                  RacingNumber racingNumber,
+                  Money salary,
+                  ChampionshipPoints championshipPoints) {
+        super(new DriverId());
+        this.name = notNull(name, "name must not be null");
+        this.teamName = notNull(teamName, "team name must not be null");
+        this.nationality = notNull(nationality, "nationality must not be null");
+        this.racingNumber = notNull(racingNumber, "racing number must not be null");
+        this.salary = notNull(salary, "salary must not be null");
+        this.championshipPoints = notNull(championshipPoints, "championship points must not be null");
+    }
+
+    protected Driver() {
+        super();
+    }
+
+    public DriverName getName() {
+        return name;
+    }
+
+    public TeamName getTeamName() {
+        return teamName;
+    }
+
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    public RacingNumber getRacingNumber() {
+        return racingNumber;
+    }
+
+    public Money getSalary() {
+        return salary;
+    }
+
+    public ChampionshipPoints getChampionshipPoints() {
+        return championshipPoints;
+    }
+
+    public void rename(DriverName newName) {
+        this.name = notNull(newName, "name must not be null");
+    }
+
+    public void changeTeam(TeamName newTeamName) {
+        this.teamName = notNull(newTeamName, "team name must not be null");
+    }
+
+    public void changeNationality(Nationality newNationality) {
+        this.nationality = notNull(newNationality, "nationality must not be null");
+    }
+
+    public void changeRacingNumber(RacingNumber newNumber) {
+        this.racingNumber = notNull(newNumber, "racing number must not be null");
+    }
+
+    public void changeSalary(Money newSalary) {
+        this.salary = notNull(newSalary, "salary must not be null");
+    }
+
+    public void addPoints(ChampionshipPoints points) {
+        this.championshipPoints = this.championshipPoints.add(points);
+    }
+
+    public void updateProfile(DriverName name,
+                              TeamName teamName,
+                              Nationality nationality,
+                              RacingNumber racingNumber,
+                              Money salary,
+                              ChampionshipPoints championshipPoints) {
+        this.name = notNull(name, "name must not be null");
+        this.teamName = notNull(teamName, "team name must not be null");
+        this.nationality = notNull(nationality, "nationality must not be null");
+        this.racingNumber = notNull(racingNumber, "racing number must not be null");
+        this.salary = notNull(salary, "salary must not be null");
+        this.championshipPoints = notNull(championshipPoints, "championship points must not be null");
     }
 }

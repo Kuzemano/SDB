@@ -3,9 +3,12 @@ package r.real.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import r.real.model.DriverId;
+import r.real.model.valueObjects.*;
 import r.real.model.Driver;
 import r.real.service.DriverService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -35,7 +38,7 @@ public class DriverController {
     }
 
     @GetMapping("/add")
-    public String showAddForm(Model model) {
+    public String showAddForm() {
         return "form";
     }
 
@@ -44,43 +47,41 @@ public class DriverController {
                          @RequestParam String teamName,
                          @RequestParam String nationality,
                          @RequestParam Integer racingNumber,
-                         @RequestParam Double salary,
-                         @RequestParam String salaryCurrency,
+                         @RequestParam BigDecimal salary,
+                         @RequestParam Currency salaryCurrency,
                          @RequestParam Integer championshipPoints) {
-        driverService.create(name, teamName, nationality, racingNumber,
-                salary, salaryCurrency, championshipPoints);
+        driverService.create(name, teamName, nationality, racingNumber, salary, salaryCurrency, championshipPoints);
         return "redirect:/drivers";
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("driver", driverService.findById(id));
+    public String showEditForm(@PathVariable String id, Model model) {
+        model.addAttribute("driver", driverService.findById(new DriverId(id)));
         return "form";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id,
+    public String update(@PathVariable String id,
                          @RequestParam String name,
                          @RequestParam String teamName,
                          @RequestParam String nationality,
                          @RequestParam Integer racingNumber,
-                         @RequestParam Double salary,
-                         @RequestParam String salaryCurrency,
+                         @RequestParam BigDecimal salary,
+                         @RequestParam Currency salaryCurrency,
                          @RequestParam Integer championshipPoints) {
-        driverService.update(id, name, teamName, nationality, racingNumber,
-                salary, salaryCurrency, championshipPoints);
+        driverService.update(new DriverId(id), name, teamName, nationality, racingNumber, salary, salaryCurrency, championshipPoints);
         return "redirect:/drivers";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        driverService.delete(id);
+    public String delete(@PathVariable String id) {
+        driverService.delete(new DriverId(id));
         return "redirect:/drivers";
     }
 
     @PostMapping("/points/{id}")
-    public String addPoints(@PathVariable Long id, @RequestParam Integer points) {
-        driverService.addPoints(id, points);
+    public String addPoints(@PathVariable String id, @RequestParam Integer points) {
+        driverService.addPoints(new DriverId(id), points);
         return "redirect:/drivers";
     }
 }

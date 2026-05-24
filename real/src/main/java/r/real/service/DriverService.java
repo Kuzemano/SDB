@@ -1,6 +1,8 @@
 package r.real.service;
 
 import r.real.model.Driver;
+import r.real.model.*;
+import r.real.model.form.DriverForm;
 
 import java.util.List;
 
@@ -8,21 +10,25 @@ public interface DriverService {
 
     List<Driver> listAll();
 
-    Driver findById(Long id);
+    Driver findById(DriverId id);
 
     List<Driver> findByName(String name);
 
     List<Driver> findByTeam(String teamName);
 
     Driver create(String name, String teamName, String nationality,
-                  Integer racingNumber, Double salary, String salaryCurrency,
+                  Integer racingNumber, java.math.BigDecimal salary,
+                  r.real.model.valueObjects.Currency salaryCurrency,
                   Integer championshipPoints);
 
-    Driver update(Long id, String name, String teamName, String nationality,
-                  Integer racingNumber, Double salary, String salaryCurrency,
+    Driver create(DriverForm form);
+
+    Driver update(DriverId id, String name, String teamName, String nationality,
+                  Integer racingNumber, java.math.BigDecimal salary,
+                  r.real.model.valueObjects.Currency salaryCurrency,
                   Integer championshipPoints);
 
-    Driver delete(Long id);
+    Driver delete(DriverId id);
 
-    Driver addPoints(Long id, Integer points);
+    Driver addPoints(DriverId id, Integer points);
 }

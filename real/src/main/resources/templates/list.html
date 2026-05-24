@@ -9,12 +9,9 @@
         h1 { color: #e10600; margin-bottom: 1.5rem; font-size: 1.8rem; }
         .toolbar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
         .toolbar form { display: flex; gap: 0.5rem; }
-        input[type=text] { padding: 7px 12px; border: 1px solid #444; border-radius: 4px;
-            background: #2a2a2a; color: #f0f0f0; outline: none; }
+        input[type=text] { padding: 7px 12px; border: 1px solid #444; border-radius: 4px; background: #2a2a2a; color: #f0f0f0; outline: none; }
         input[type=text]:focus { border-color: #e10600; }
-        .btn { padding: 7px 14px; background: #e10600; color: white; border: none;
-            cursor: pointer; text-decoration: none; border-radius: 4px; font-size: 0.9rem;
-            transition: background 0.2s; display: inline-block; }
+        .btn { padding: 7px 14px; background: #e10600; color: white; border: none; cursor: pointer; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: background 0.2s; display: inline-block; }
         .btn:hover { background: #b30000; }
         .btn-secondary { background: #444; }
         .btn-secondary:hover { background: #555; }
@@ -25,8 +22,7 @@
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #333; }
         .actions { display: flex; gap: 0.5rem; }
-        .points-badge { background: #e10600; color: white; padding: 2px 8px;
-            border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        .points-badge { background: #e10600; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -62,17 +58,17 @@
     <tbody>
     <tr th:each="driver : ${drivers}">
         <td th:text="${driver.id}"></td>
-        <td th:text="${driver.name}"></td>
-        <td th:text="${driver.teamName}"></td>
-        <td th:text="${driver.nationality}"></td>
-        <td th:text="${driver.racingNumber}"></td>
-        <td th:text="${'$' + #numbers.formatDecimal(driver.salary, 0, 'COMMA', 0, 'POINT')}"></td>
-        <td th:text="${driver.salaryCurrency}"></td>
-        <td><span class="points-badge" th:text="${driver.championshipPoints}"></span></td>
+        <td th:text="${driver.name.value}"></td>
+        <td th:text="${driver.teamName.value}"></td>
+        <td th:text="${driver.nationality.value}"></td>
+        <td th:text="${driver.racingNumber.value}"></td>
+        <td th:text="${#numbers.formatDecimal(driver.salary.amount, 1, 2)}"></td>
+        <td th:text="${driver.salary.currency}"></td>
+        <td><span class="points-badge" th:text="${driver.championshipPoints.value}"></span></td>
         <td>
             <div class="actions">
-                <a class="btn" th:href="@{/drivers/edit/{id}(id=${driver.id})}">Edit</a>
-                <form th:action="@{/drivers/delete/{id}(id=${driver.id})}" method="post">
+                <a class="btn" th:href="@{'/drivers/edit/' + ${driver.id}}">Edit</a>
+                <form th:action="@{'/drivers/delete/' + ${driver.id}}" method="post">
                     <button type="submit" class="btn btn-secondary"
                             onclick="return confirm('Delete this driver?')">Delete</button>
                 </form>
