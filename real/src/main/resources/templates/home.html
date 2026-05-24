@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1 th:text="${'Logged in: ' + name}"></h1>
+<h2 th:text="${'Roles: ' + roles}"></h2>
+<div><h3>Access Token</h3><div th:text="${accessToken}"></div></div>
+<div><h3>Refresh Token</h3><div th:text="${refreshToken}"></div></div>
+<div><h3>ID Token</h3><div th:text="${idToken}"></div></div>
+<a th:href="@{/drivers}">Drivers</a>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>

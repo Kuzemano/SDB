@@ -1,3 +1,32 @@
+package r.real.drivers.web;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import r.real.drivers.domain.Driver;
+import r.real.drivers.service.DriverService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/drivers")
+public class RestDriverController {
+
+    private final DriverService driverService;
+
+    public RestDriverController(DriverService driverService) {
+        this.driverService = driverService;
+    }
+
+    @GetMapping
+    public List<Driver> listAll() {
+        return driverService.listAll();
+    }
+}
+
+
+
+
 /*
 package r.real.web;
 

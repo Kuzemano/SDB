@@ -1,8 +1,7 @@
-package r.real.rides.domain.ids;
+package r.real.users.domain.ids;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import r.real.common.domain.base.DomainObjectId;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,13 +9,12 @@ import java.util.UUID;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
-
 @Embeddable
-public class RideId implements Serializable {
-    @Column(name = "r_id", nullable = false, updatable = false)
+public class UserId implements Serializable {
+    @Column(name = "id", nullable = false, updatable = false)
     private String id;
 
-    public RideId(String id) {
+    public UserId(String id) {
         notNull(id, "id must not be null");
         try {
             this.id = UUID.fromString(id.trim()).toString();
@@ -25,7 +23,7 @@ public class RideId implements Serializable {
         }
     }
 
-    public RideId() {
+    public UserId() {
         this.id = UUID.randomUUID().toString();
     }
 
@@ -41,7 +39,7 @@ public class RideId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RideId usrId)) return false;
+        if (!(o instanceof UserId usrId)) return false;
         return Objects.equals(id, usrId.id);
     }
 
