@@ -11,8 +11,9 @@ import java.util.UUID;
 
 import static org.apache.commons.lang3.Validate.*;
 
-@MappedSuperclass
+
 @Embeddable
+
 public class DomainObjectId implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)

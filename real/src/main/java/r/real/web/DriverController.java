@@ -1,15 +1,19 @@
 package r.real.web;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import r.real.model.DriverId;
-import r.real.model.valueObjects.*;
 import r.real.model.Driver;
+import r.real.model.DriverId;
+import r.real.model.valueObjects.Currency;
 import r.real.service.DriverService;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 @RequestMapping("/drivers")
@@ -49,8 +53,25 @@ public class DriverController {
                          @RequestParam Integer racingNumber,
                          @RequestParam BigDecimal salary,
                          @RequestParam Currency salaryCurrency,
-                         @RequestParam Integer championshipPoints) {
-        driverService.create(name, teamName, nationality, racingNumber, salary, salaryCurrency, championshipPoints);
+                         @RequestParam Integer championshipPoints,
+                         @RequestParam(required = false)
+                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime contractStartDate,
+                         @RequestParam(required = false)
+                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime contractEndDate) {
+
+        ZonedDateTime zonedStart = null;
+        ZonedDateTime zonedEnd = null;
+
+        if (contractStartDate != null) {
+            zonedStart = ZonedDateTime.of(contractStartDate, TimeZone.getDefault().toZoneId());
+        }
+        if (contractEndDate != null) {
+            zonedEnd = ZonedDateTime.of(contractEndDate, TimeZone.getDefault().toZoneId());
+        }
+
+        driverService.create(name, teamName, nationality, racingNumber, salary, salaryCurrency,
+                championshipPoints, zonedStart, zonedEnd);
+
         return "redirect:/drivers";
     }
 

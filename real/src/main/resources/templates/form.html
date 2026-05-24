@@ -75,6 +75,12 @@
         <input id="championshipPoints" type="number" name="championshipPoints" min="0"
                th:value="${driver != null ? driver.championshipPoints.value : ''}" required/>
 
+        <label for="contractStartDate">Contract Start Date</label>
+        <input id="contractStartDate" type="datetime-local" name="contractStartDate"/>
+
+        <label for="contractEndDate">Contract End Date</label>
+        <input id="contractEndDate" type="datetime-local" name="contractEndDate"/>
+
         <div class="actions">
             <button type="submit" class="btn">Save Driver</button>
             <a class="back" th:href="@{/drivers}">← Cancel</a>

@@ -2,21 +2,21 @@ package r.real.model.base;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.MappedSuperclass;
-import org.springframework.data.util.ProxyUtils;
 
-import static org.apache.commons.lang3.Validate.notNull;
+import java.io.Serializable;
+import java.util.Objects;
 
 @MappedSuperclass
-public abstract class AbstractEntity<ID extends DomainObjectId> implements DomainObject {
+public abstract class AbstractEntity<ID extends Serializable> implements DomainObject {
 
     @EmbeddedId
     private ID id;
 
-    protected AbstractEntity(ID id) {
-        this.id = notNull(id, "id must not be null");
+    protected AbstractEntity() {
     }
 
-    protected AbstractEntity() {
+    protected AbstractEntity(ID id) {
+        this.id = id;
     }
 
     public ID getId() {
@@ -24,14 +24,14 @@ public abstract class AbstractEntity<ID extends DomainObjectId> implements Domai
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !getClass().equals(ProxyUtils.getUserClass(obj))) return false;
-        var other = (AbstractEntity<?>) obj;
-        return id != null && id.equals(other.id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractEntity<?> that)) return false;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return id == null ? super.hashCode() : id.hashCode();
+        return Objects.hash(id);
     }
 }

@@ -53,6 +53,8 @@
         <th>Cur.</th>
         <th>Points</th>
         <th>Actions</th>
+        <th>Contract Start</th>
+        <th>Contract End</th>
     </tr>
     </thead>
     <tbody>
@@ -64,6 +66,8 @@
         <td th:text="${driver.racingNumber.value}"></td>
         <td th:text="${#numbers.formatDecimal(driver.salary.amount, 1, 2)}"></td>
         <td th:text="${driver.salary.currency}"></td>
+        <td th:text="${driver.contractStartDate}"></td>
+        <td th:text="${driver.contractEndDate}"></td>
         <td><span class="points-badge" th:text="${driver.championshipPoints.value}"></span></td>
         <td>
             <div class="actions">

@@ -10,12 +10,12 @@ import java.util.UUID;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Embeddable
-public class DriverId implements Serializable {
+public class DriverCandidateId implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)
     private String id;
 
-    public DriverId(String id) {
+    public DriverCandidateId(String id) {
         notNull(id, "id must not be null");
         try {
             this.id = UUID.fromString(id.trim()).toString();
@@ -24,7 +24,7 @@ public class DriverId implements Serializable {
         }
     }
 
-    public DriverId() {
+    public DriverCandidateId() {
         this.id = UUID.randomUUID().toString();
     }
 
@@ -40,8 +40,8 @@ public class DriverId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DriverId driverId)) return false;
-        return Objects.equals(id, driverId.id);
+        if (!(o instanceof DriverCandidateId that)) return false;
+        return Objects.equals(id, that.id);
     }
 
     @Override
