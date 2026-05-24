@@ -2,7 +2,7 @@ package r.real;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
-import r.real.model.valueObjects.DriverName;
+import r.real.drivers.domain.valueObjects.DriverName;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;

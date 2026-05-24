@@ -2,8 +2,8 @@ package r.real.config;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import r.real.model.valueObjects.Currency;
-import r.real.service.DriverService;
+import r.real.common.domain.valueObjects.Currency;
+import r.real.drivers.service.DriverService;
 
 import java.math.BigDecimal;
 
